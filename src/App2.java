@@ -91,7 +91,7 @@ public class App2 {
 				value2.setText(value2.getText()+1);
 			}
 		});
-		btnNewButton.setBounds(10, 103, 39, 23);
+		btnNewButton.setBounds(10, 103, 33, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton button = new JButton("2");
