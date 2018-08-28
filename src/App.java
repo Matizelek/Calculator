@@ -17,20 +17,38 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-public class App{
-	private static Text insertText;
-	static Operation currentOperation;
+public class App {
+	
 
+	static Display display = Display.getDefault();
 	static Shell shell = new Shell(); 
-	private static Text operationText;
-	private static Text informationText;
-	static double argument1;
-	static double argument2;
-	double solution;
+	static Text insertText;
+	static Text operationText;
+	static Text informationText;
 	
 	public static void main(String[] args) {
-		Display display = Display.getDefault();
-		//Shell shell = new Shell();
+	
+		LoginForm loginF = new LoginForm(display, shell);
+		if(loginF.getCheck() == true)new App();
+	
+	
+		
+
+	}
+	
+	App(){
+		
+		DefaultButton dButtonN = new ButtonNumber();
+		DefaultButton dButton = new DefaultButton();
+		DefaultButton dButtonPlus = new ButtonPlusOperation();
+		DefaultButton dButtonMinus = new ButtonMinusOperation();
+		DefaultButton dButtonMultiply = new ButtonMultiplyOperation();
+		DefaultButton dButtonDivide = new ButtonDivideOperation();
+		DefaultButton dButtonCR = new ButtonClear();
+		DefaultButton dButtonMake = new ButtonMake();
+		DefaultButton dButtonC = new ButtonCorrect();
+		DefaultText dText = new DefaultText();
+		
 		Button button_1;
 		Button button_2;
 		Button button_3;
@@ -48,6 +66,9 @@ public class App{
 		Button button_equals;
 		Button button_C;
 		Button button_CR;
+		display = Display.getDefault();
+		shell = new Shell(Display.getCurrent());
+	
 		
 		shell.setSize(258, 384);
 		shell.setText("SWT Application");
@@ -64,65 +85,65 @@ public class App{
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		informationText = createDefaultText(206,28,5,1);
+		informationText = dText.createDefaultText(shell,206,28,5,1);
 		
-		operationText = createDefaultText(33,27,2,1);
+		operationText = dText.createDefaultText(shell,33,27,2,1);
 
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		insertText = createDefaultText(10,27,7,1);
+		insertText = dText.createDefaultText(shell,10,27,7,1);
 		
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		button_1 = createDefaultButton("1","null");
+		button_1 = dButtonN.createDefaultButtonNumber(shell,"1",insertText);
 
-		button_2 = createDefaultButton("2","null");
+		button_2 = dButtonN.createDefaultButtonNumber(shell,"2",insertText);
 		
-		button_3 = createDefaultButton("3","null");
+		button_3 = dButtonN.createDefaultButtonNumber(shell,"3",insertText);
 	
 		new Label(shell, SWT.NONE);
 		
-		button_add = createDefaultButton("+","math");
+		button_add = dButtonPlus.createDefaultButtonOperation(shell,"+",insertText,operationText, informationText);
 		
-		button_subtract = createDefaultButton("-","math");
-		
-		new Label(shell, SWT.NONE);
-		new Label(shell, SWT.NONE);
-		new Label(shell, SWT.NONE);
-		new Label(shell, SWT.NONE);
-		
-		button_4 = createDefaultButton("4","null");
-
-		button_5 = createDefaultButton("5","null");
-
-		button_6 = createDefaultButton("6","null");
-
-		new Label(shell, SWT.NONE);
-		
-		button_multiply = createDefaultButton("*","math");
-
-		button_divide = createDefaultButton("/","math");
+		button_subtract = dButtonMinus.createDefaultButtonOperation(shell,"-",insertText,operationText, informationText);
 		
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		button_7 = createDefaultButton("7","null");
+		button_4 = dButtonN.createDefaultButtonNumber(shell,"4",insertText);
 
-		button_8 = createDefaultButton("8","null");
+		button_5 = dButtonN.createDefaultButtonNumber(shell,"5",insertText);
 
-		button_9 = createDefaultButton("9","null");
+		button_6 = dButtonN.createDefaultButtonNumber(shell,"6",insertText);
 
 		new Label(shell, SWT.NONE);
 		
-		button_CR = createDefaultButton("CR","CR");
+		button_multiply = dButtonMultiply.createDefaultButtonOperation(shell,"*",insertText,operationText, informationText);
+
+		button_divide = dButtonDivide.createDefaultButtonOperation(shell,"/",insertText,operationText, informationText);
 		
-		button_C = createDefaultButton("C","C");
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		
+		button_7 = dButtonN.createDefaultButtonNumber(shell,"7",insertText);
+
+		button_8 = dButtonN.createDefaultButtonNumber(shell,"8",insertText);
+
+		button_9 = dButtonN.createDefaultButtonNumber(shell,"9",insertText);
+
+		new Label(shell, SWT.NONE);
+		
+		button_CR = dButtonCR.createDefaultButtonCR(shell,"CR",insertText,operationText, informationText);
+		
+		button_C = dButtonC.createDefaultButtonC(shell,"C",insertText,operationText, informationText);
 
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
@@ -130,12 +151,12 @@ public class App{
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		button_0 = createDefaultButton("0","null");
+		button_0 = dButtonN.createDefaultButtonNumber(shell,"0",insertText);
 		
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		
-		button_equals = createDefaultButton("=","make");
+		button_equals = dButtonMake.createDefaultButtonMake(shell,"=",insertText,operationText, informationText);
 
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
@@ -149,83 +170,6 @@ public class App{
 			}
 		}
 	}
-	
 
-	static Button createDefaultButton(String text, String operation){
-		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if(operation.equals("null")) insertText.append(text);
-				
-				else if (operation.equals("math")){
-					operationText.setText(text);
-					informationText.append(insertText.getText());
-					insertText.setText("");
-					if(text.equals("+"))clickedPlusButton();
-					if(text.equals("-"))clickedMinusButton();
-					if(text.equals("*"))clickedMultiplyButton();
-					if(text.equals("/"))clickedDivideButton();
-					}
-				else if (operation.equals("CR")){
-					operationText.setText("");
-					informationText.setText("");
-					insertText.setText("");
-				}
-				else if(operation.equals("C")){
-					insertText.setText("");
-				}
-				else if(operation.equals("make")){
-					argument1 = Double.parseDouble(informationText.getText());
-					argument2 = Double.parseDouble(insertText.getText());
-					try {
-						DivideCheck devidecheck = new DivideCheck(operationText, informationText, insertText, argument1, argument2);
-					}
-					catch (DivideByZeroException ex){
-						MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING );
-						messageBox.setText("Warning");
-				        messageBox.setMessage(ex.getMessage());
-		        		messageBox.open();
-					}
-					
-				}
-				
-			}
-		});
-		btnNewButton.setText(text);
-		btnNewButton.setFont(SWTResourceManager.getFont("Segoe UI", 20, SWT.NORMAL));
-		return btnNewButton;
-	}
 	
-	static Text createDefaultText(int width, int height, int horizontal, int vertical){
-		Text text = new Text(shell, SWT.BORDER);
-		GridData gd_Text = new GridData(SWT.FILL, SWT.CENTER, true, false, horizontal, vertical);
-		gd_Text.widthHint = width;
-		gd_Text.heightHint = height;
-		text.setLayoutData(gd_Text);
-		return text;
-	}
-	
-    static void clickedPlusButton()
-    {
-        currentOperation = new PlusOperation();
-    }
-    static void clickedMinusButton()
-    {
-        currentOperation = new MinusOperation();
-    }
-   static void clickedMultiplyButton()
-    {
-        currentOperation = new MultiplyOperation();
-    }
-   
-    static void clickedDivideButton()
-    {
-        currentOperation = new DivideOperation();
-        
-    }
-    static double clickedResultButton(double firstValue, double secondValue){
-
-        return currentOperation.execute(firstValue,secondValue);
-    }
 }

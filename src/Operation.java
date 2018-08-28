@@ -1,7 +1,7 @@
 
 public interface Operation {
 
-    double execute(double a, double b);
+    double execute(double a, double b) throws DivideByZeroException;
 
     String getOperatorAsString();
 }
