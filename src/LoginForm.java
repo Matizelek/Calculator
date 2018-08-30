@@ -1,8 +1,5 @@
 
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -10,7 +7,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Label;
@@ -18,6 +14,8 @@ import org.eclipse.swt.widgets.Label;
 
 
 public class LoginForm {
+	BoxMessage boxMessage = new BoxMessage();
+	MemoryUserRepository MemUserRepository = new MemoryUserRepository(); 
 
 		  Label label1,label2;
 		  Text username;
@@ -56,12 +54,9 @@ public class LoginForm {
 		  
 		  if(loginCheck.ChceckCorrectData(username, password, shell) == true){
 			  if(loginCheck.CheckToLogin(username, password, shell)){
-			   MessageBox messageBox=new MessageBox(shell,SWT.OK|SWT.CANCEL);
-			   messageBox.setText("Login Form");
-			   messageBox.setMessage("Welcome: " + username.getText());
-			   messageBox.open();
+					boxMessage.showOkMessage("Welcome","Welcome: " + username.getText(), shell); 
 			   shell.close();
-			  check = true;
+			   check = true;
 		  }
 		  }
 		  }}
@@ -77,22 +72,16 @@ public class LoginForm {
 				  
 				  if(loginCheck.ChceckCorrectData(username, password, shell) == true){
 					  if(loginCheck.CheckOnly(username, password, shell)){
-						  
-					  
-					  if(loginCheck.CheckAlreadyExist(username, password, shell)==true){
+						 if(loginCheck.CheckAlreadyExist(username, password, shell)==true){
 						  
 					  
 				  User user = new User();
 				  user.setMail(username.getText());
 				  user.setPassword(password.getText());
-				  Users users = new Users();
-				  users.AddUser(user);
-				  MessageBox messageBox=new MessageBox(shell,SWT.OK);
-				  messageBox.setText("Login Form");
-				  messageBox.setMessage("Register Success");
-				  messageBox.open();
-				  username.setText("");
-				  password.setText("");
+				  MemUserRepository.addUser(user);
+				  boxMessage.showOkMessage("Login Form", "Register Success", shell);
+				 // username.setText("");
+				  //password.setText("");
 					  }}
 			  }
 			  }

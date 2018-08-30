@@ -10,16 +10,6 @@ public class Users extends User{
 	
 	public boolean SearchUser(User user){
 		
-		/*
-
-		 map.forEach((k,v)  -> {
-			if(v.getMail().equals(user.getMail())){
-				if(v.getPassword().equals(user.getPassword())){
-					return true;
-				}
-				}
-		});
-		 */
 		 for(Map.Entry<Integer, User> entry : map.entrySet()){
 			 if(entry.getValue().getMail().equals(user.getMail())){
 				 if(entry.getValue().getPassword().equals(user.getPassword())){

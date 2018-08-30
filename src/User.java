@@ -18,5 +18,9 @@ public class User {
 		this.password = password;
 	}
 	
+	public boolean verifyPassword(String password){
+		if(this.password.equals(password))return true;
+		return false;
+	}
 	
 }
